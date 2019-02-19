@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".Registro">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
         android:padding="50dp"
         tools:layout_editor_absoluteX="0dp"
@@ -20,40 +21,24 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/montserrat_bold"
-            android:text="Benvingut"
+            android:text="Registro"
             android:textSize="30dp" />
 
-        <LinearLayout
+        <EditText
+            android:id="@+id/nameRegistro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:hint="Name"
+            android:inputType="text" />
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat"
-                android:text="Play"
-                android:onClick="abrirPartida"/>
-
-            <Button
-                android:id="@+id/putuacionesButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat"
-                android:text="Puntuacions"
-                android:onClick="verPuntuaciones"/>
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat"
-                android:text="Com jugar" />
-
-
-        </LinearLayout>
-
+        <Button
+            android:id="@+id/buttonReggistro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Registrate"
+            android:onClick="registrarUsuario"/>
 
 
     </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>

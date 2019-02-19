@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "584901284244",
+    "firebase_url": "https://ruleta-d8b71.firebaseio.com",
+    "project_id": "ruleta-d8b71",
+    "storage_bucket": "ruleta-d8b71.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:584901284244:android:2da83103deedbaf7",
+        "android_client_info": {
+          "package_name": "com.germanlizondo.ruleta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "584901284244-fsifmkbbu1cn5f5ri931unbvt70tstb0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.germanlizondo.ruleta",
+            "certificate_hash": "e0ecf7bd1c30f75a05dd4081d083ac05c6458f26"
+          }
+        },
+        {
+          "client_id": "584901284244-3ekrbqm6e23t2ueim6pl52dn3camloje.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAl_mynZugZGSnIph7BQYBflrB-yMsKD4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "584901284244-3ekrbqm6e23t2ueim6pl52dn3camloje.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
