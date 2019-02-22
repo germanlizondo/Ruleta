@@ -4,11 +4,9 @@ public class Aposta {
 
     private int numero;
     private int color;
+    private int quantitat;
 
-    public Aposta(int numero, int color) {
-        this.numero = numero;
-        this.color = color;
-    }
+    public Aposta() { }
 
     public int getNumero() {
         return numero;
@@ -24,5 +22,13 @@ public class Aposta {
 
     public void setColor(int color) {
         this.color = color;
+    }
+
+    public int getQuantitat() {
+        return quantitat;
+    }
+
+    public void setQuantitat(int quantitat) {
+        this.quantitat = quantitat;
     }
 }

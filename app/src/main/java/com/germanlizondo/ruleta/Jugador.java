@@ -1,16 +1,33 @@
 package com.germanlizondo.ruleta;
 
-public class Jugador {
+import android.support.annotation.NonNull;
 
-    private int id;
+public class Jugador implements Comparable<Jugador> {
+
+
     private String nom;
     private int saldo;
     private Aposta aposta;
 
-    public Jugador(String nom, int saldo) {
+    public Jugador(){}
+
+    public  Jugador(String nom, int saldo) {
         this.nom = nom;
         this.saldo = saldo;
+        this.aposta = new Aposta();
     }
+
+    @Override
+    public String toString() {
+        return "Jugador{" +
+                ", nom='" + nom + '\'' +
+                ", saldo=" + saldo +
+                ", aposta=" + aposta +
+                '}';
+    }
+
+
+
 
     public String getNom() {
         return nom;
@@ -34,5 +51,12 @@ public class Jugador {
 
     public void setAposta(Aposta aposta) {
         this.aposta = aposta;
+    }
+
+    @Override
+    public int compareTo(@NonNull Jugador o) {
+        if ( o.saldo < this.saldo ) return -1;
+        else if ( o.saldo == this.saldo ) return 0;
+        else return 1;
     }
 }

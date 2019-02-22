@@ -19,6 +19,8 @@
         android:orientation="vertical"
         android:padding="30dp">
 
+
+
         <ImageView
             android:id="@+id/ruletaImage"
             android:layout_width="match_parent"
@@ -35,7 +37,7 @@
                 android:layout_height="match_parent"
                 android:text="Aposta"
                 android:fontFamily="@font/montserrat"
-                android:onClick="girarRuleta"/>
+                android:onClick="iniciarJoc"/>
         </RelativeLayout>
 
 
@@ -53,15 +55,39 @@
                 android:textSize="50dp"
                 android:fontFamily="@font/montserrat"
                 />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="15dp">
+                <TextView
+                    android:id="@+id/nameJugador"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/puntos"
+                    android:fontFamily="@font/montserrat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
 
+                    android:layout_weight="1"/>
+            </LinearLayout>
 
             <EditText
+                android:id="@+id/textAposta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Numero aposta"
                 android:inputType="phone" />
 
-            
+            <EditText
+                android:id="@+id/textPuntos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Aposta punts"
+                android:inputType="phone" />
         </LinearLayout>
 
 
