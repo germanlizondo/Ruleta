@@ -173,8 +173,9 @@ if(this.validarAposta())
 
     public void getJugador(){
 
-
-        this.bd.getReference().child("Jugador").child("german").addValueEventListener(new ValueEventListener() {
+        Bundle extras = getIntent().getExtras();
+        String nomJugador = extras.getString("jugador");
+        this.bd.getReference().child("Jugador").child(nomJugador).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 

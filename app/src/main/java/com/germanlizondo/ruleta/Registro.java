@@ -42,6 +42,10 @@ public class Registro extends AppCompatActivity {
             this.db.agregarJugador(jugador);
 
             this.textonombre.setText("");
+
+            Intent loginIntent = new Intent(this,Login.class);
+
+            startActivity(loginIntent);
         }
 
     }

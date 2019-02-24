@@ -15,7 +15,7 @@
         tools:layout_editor_absoluteY="0dp">
 
         <TextView
-
+            android:id="@+id/tituloMain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -27,6 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:paddingBottom="15dp"
             >
 
             <Button
@@ -55,5 +56,15 @@
 
 
 
+
+        <Button
+            android:id="@+id/audioButton"
+            android:onClick="stadeMusic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:text="Pausar Musica" />
+
     </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>

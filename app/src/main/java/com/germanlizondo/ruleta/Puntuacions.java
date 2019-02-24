@@ -53,9 +53,6 @@ public class Puntuacions extends AppCompatActivity {
                 AdaptadorPuntuaciones adapter = new AdaptadorPuntuaciones(Puntuacions.this,R.layout.item_puntuacions,Puntuacions.this.jugadores);
                 Puntuacions.this.lista.setAdapter(adapter);
 
-
-
-
             }
 
             @Override

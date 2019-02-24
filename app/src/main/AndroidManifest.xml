@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Partida"></activity>
+        <activity android:name=".Login"></activity>
+        <activity android:name=".Partida" />
         <activity android:name=".Registro" />
         <activity android:name=".Puntuacions" />
         <activity android:name=".ComoJugar" />
@@ -27,6 +28,11 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
+
+        <service android:name=".AudioService"
+            android:exported="true"></service>
     </application>
+
+
 
 </manifest>
