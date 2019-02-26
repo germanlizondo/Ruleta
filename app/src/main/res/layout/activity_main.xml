@@ -35,7 +35,9 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat"
                 android:text="Play"
-                android:onClick="abrirPartida"/>
+                android:onClick="abrirPartida"
+                android:background="@drawable/boton"
+                android:layout_marginBottom="10dp"/>
 
             <Button
                 android:id="@+id/putuacionesButton"
@@ -43,13 +45,17 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat"
                 android:text="Puntuacions"
-                android:onClick="verPuntuaciones"/>
+                android:onClick="verPuntuaciones"
+                android:background="@drawable/boton"
+                android:layout_marginBottom="10dp"/>
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat"
-                android:text="Com jugar" />
+                android:text="Com jugar"
+                android:background="@drawable/boton"
+                android:layout_marginBottom="10dp"/>
 
 
         </LinearLayout>

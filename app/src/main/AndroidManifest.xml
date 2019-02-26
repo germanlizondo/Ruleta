@@ -3,6 +3,7 @@
     package="com.germanlizondo.ruleta">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -11,7 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Login"></activity>
+        <service
+            android:name=".CoinService"
+            android:exported="false"></service>
+
+        <activity android:name=".Login" />
         <activity android:name=".Partida" />
         <activity android:name=".Registro" />
         <activity android:name=".Puntuacions" />
@@ -28,11 +33,9 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-
-        <service android:name=".AudioService"
-            android:exported="true"></service>
+        <service
+            android:name=".AudioService"
+            android:exported="true" />
     </application>
-
-
 
 </manifest>

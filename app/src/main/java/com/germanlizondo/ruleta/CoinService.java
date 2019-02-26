@@ -1,7 +1,6 @@
 package com.germanlizondo.ruleta;
 
 import android.app.IntentService;
-import android.app.Service;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -9,15 +8,19 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-public class AudioService  extends IntentService {
 
+/**
+ * An {@link IntentService} subclass for handling asynchronous task requests in
+ * a service on a separate handler thread.
+ * <p>
+ * TODO: Customize class - update intent actions and extra parameters.
+ */
+public class CoinService extends IntentService {
     private MediaPlayer mp;
-    private MediaPlayer coinmp;
-    private Boolean estaReproduint = false;
     private AudioManager am;
 
-    public AudioService(){
-        super("AudioService");
+    public CoinService(){
+        super("CoinService");
     }
 
 
@@ -27,8 +30,7 @@ public class AudioService  extends IntentService {
         super.onCreate();
 
 
-        mp = MediaPlayer.create(this, R.raw.deathletter);
-        mp.setLooping(true);
+        mp = MediaPlayer.create(this, R.raw.coin);
         mp.setVolume(100,100);
         Log.i("MUSICA","Serice Create");
 
@@ -67,16 +69,8 @@ public class AudioService  extends IntentService {
                 Log.d("HELLO THERE", "error en la petició del listener de focus ");
             }
 
-            String operacio = intent.getStringExtra("operacio");
-            Log.w("MUSICA",operacio);
-            switch (operacio){
-                case "inici" : this.mp.start();this.estaReproduint = !this.estaReproduint;
-                    break;
-                case "pausa" : this.mp.pause(); this.estaReproduint = !this.estaReproduint;
-                    break;
-                default:
-                    break;
-            }
+            this.mp = MediaPlayer.create(this, R.raw.coin);
+            this.mp.start();
         }
         return START_STICKY;
     }
@@ -136,5 +130,8 @@ public class AudioService  extends IntentService {
     protected void onHandleIntent(@Nullable Intent intent) {
 
     }
-
 }
+
+
+
+

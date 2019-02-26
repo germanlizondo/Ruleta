@@ -4,12 +4,15 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.nfc.Tag;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -24,17 +27,23 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
 
-public class Partida extends AppCompatActivity {
+public class Partida extends AppCompatActivity implements View.OnClickListener {
 
     private Database bd = new Database();
     private static final String TAG = "PARTIDA";
     private Ruleta ruleta = new Ruleta();
-    private  TextView textoGanador,textoPuntos,textoNombre;
-    private EditText textoAposta,textPuntsAposta;
+    private  TextView textoGanador,textoPuntos,textoNombre,textoApuesta;
+    private EditText textPuntsAposta;
     private Aposta aposta;
     private Jugador jugador;
+    private LinearLayout tapete;
+    private Intent coinIntent;
+    private ArrayList<CasillaTapete> casillasTapete = new ArrayList<CasillaTapete>();
+    private LinearLayout casillaAnterior = null;
 
 
     @Override
@@ -44,7 +53,9 @@ public class Partida extends AppCompatActivity {
         this.textoPuntos = (TextView) findViewById(R.id.puntos);
         this.textoNombre = (TextView) findViewById(R.id.nameJugador);
         this.textPuntsAposta = (EditText) findViewById(R.id.textPuntos);
-
+        this.tapete = (LinearLayout)findViewById(R.id.tapete);
+        this.coinIntent = new Intent(this,CoinService.class);
+        this.textoApuesta = (TextView) findViewById(R.id.textoApuesta);
 
 
        this.getJugador();
@@ -53,7 +64,11 @@ public class Partida extends AppCompatActivity {
 
 
         this.textoGanador = (TextView) findViewById(R.id.textoGanador);
-        this.textoAposta = (EditText) findViewById(R.id.textAposta);
+
+
+
+
+        this.crearTapete();
      //   this.pintarRuleta();
 
     }
@@ -62,10 +77,11 @@ public class Partida extends AppCompatActivity {
     public boolean validarAposta(){
 
         this.aposta = new Aposta();
-        if(!this.textoAposta.getText().toString().equals("")){
-            this.aposta.setNumero(Integer.parseInt(this.textoAposta.getText().toString()));
+        if(!this.textoApuesta.getText().toString().equals("")){
+            this.aposta.setNumero(Integer.parseInt(this.textoApuesta.getText().toString()));
             if( this.aposta.getNumero() < 0 ||  this.aposta.getNumero() > 36  ){
-                this.textoAposta.setError("Escriu un numero dintre de la ruleta");
+              Toast toast = Toast.makeText(this,"Escriu un numero dintre de la ruleta",Toast.LENGTH_LONG);
+              toast.show();
               return false;
             }
             else {
@@ -86,6 +102,8 @@ public class Partida extends AppCompatActivity {
 
             }
         }else{
+            Toast toast = Toast.makeText(this,"Fes una aposta",Toast.LENGTH_LONG);
+            toast.show();
             return false;
         }
     }
@@ -198,6 +216,147 @@ if(this.validarAposta())
         this.bd.getReference().child("Jugador").child(this.jugador.getNom()).child("saldo").setValue(this.jugador.getSaldo());
 
     }
+
+
+    public void crearTapete(){
+
+        int z = 0;
+
+        Drawable d = getResources().getDrawable(R.drawable.tapete);
+
+        LinearLayout.LayoutParams casillaParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        casillaParams.gravity = Gravity.CENTER;
+
+        LinearLayout.LayoutParams divParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT,1.0f);
+
+        LinearLayout.LayoutParams rowParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        rowParams.setMargins(20,20,20,20);
+
+
+
+
+
+        LinearLayout num0 = new LinearLayout(this);
+        num0.setOrientation(LinearLayout.VERTICAL);
+        num0.setLayoutParams(rowParams);
+        num0.setBackground(d);
+
+        TextView num0Text = new TextView(this);
+
+
+        num0Text.setPadding(10,10,10,10);
+        num0Text.setLayoutParams(casillaParams);
+        num0Text.setGravity(View.TEXT_ALIGNMENT_CENTER);
+
+        num0Text.setText(z+"");
+
+
+        num0.addView(num0Text);
+        num0.setId(z);
+        num0.setOnClickListener(this);
+
+
+        this.tapete.addView(num0);
+
+        this.casillasTapete.add(new CasillaTapete(z));
+
+
+
+        for(int y = 0; y < 12;y++){
+
+
+
+                LinearLayout row = new LinearLayout(this);
+                row.setOrientation(LinearLayout.HORIZONTAL);
+                row.setLayoutParams(rowParams);
+
+                for(int x = 0; x < 3;x++){
+                    z++;
+                    LinearLayout div = new LinearLayout(this);
+                    div.setOrientation(LinearLayout.VERTICAL);
+                    div.setLayoutParams(divParams);
+                    div.setBackground(d);
+                    div.setPadding(10,10,10,10);
+
+
+                    TextView casilla = new TextView (this);
+
+                    casilla.setPadding(10,10,10,10);
+                    casilla.setLayoutParams(casillaParams);
+                    casilla.setGravity(View.TEXT_ALIGNMENT_CENTER);
+
+                    casilla.setText(z+"");
+
+
+                    div.setId(z);
+                    div.addView(casilla);
+                    div.setOnClickListener(this);
+                    row.addView(div);
+                    this.casillasTapete.add(new CasillaTapete(z));
+
+
+
+
+                }
+
+                this.tapete.addView(row);
+
+
+
+        }
+
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        LinearLayout div = (LinearLayout) findViewById(v.getId());
+
+
+
+
+
+
+
+        Drawable seleccionada = getResources().getDrawable(R.drawable.casillaseleccionada);
+        Drawable noseleccionada = getResources().getDrawable(R.drawable.tapete);
+
+        if( this.casillasTapete.get(v.getId()).isEstado()){
+
+
+
+            div.setBackground(noseleccionada);
+
+            this.casillasTapete.get(v.getId()).setEstado(!this.casillasTapete.get(v.getId()).isEstado());
+            this.textoApuesta.setText("");
+
+
+
+        }else {
+
+
+            this.textoApuesta.setText(this.casillasTapete.get(v.getId()).getNumero() + "");
+
+            div.setBackground(seleccionada);
+            this.casillasTapete.get(v.getId()).setEstado(!this.casillasTapete.get(v.getId()).isEstado());
+            startService(this.coinIntent);
+
+            if(this.casillaAnterior != null){
+                if (this.casillaAnterior.getId() != div.getId()) {
+                    this.casillaAnterior.setBackground(noseleccionada);
+                }
+
+
+            }
+
+            this.casillaAnterior = (LinearLayout) findViewById(v.getId());
+
+        }
+
+
+    }
+
+
 
 
 
