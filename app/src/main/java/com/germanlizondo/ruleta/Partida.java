@@ -73,18 +73,56 @@ public class Partida extends AppCompatActivity implements View.OnClickListener {
 
     }
 
+    private void seleccionarAposta(){
+
+        if(this.textoApuesta.getText().toString().equals("Negro")){
+            this.aposta.setTipo("RN");
+            this.aposta.setColor("#000000");
+        }else if(this.textoApuesta.getText().toString().equals("Rojo")){
+            this.aposta.setTipo("RN");
+            this.aposta.setColor("#d62121");
+        }
+        else{
+            this.aposta.setTipo("Numero");
+            this.aposta.setNumero(Integer.parseInt(this.textoApuesta.getText().toString()));
+        }
+    }
+
 
     public boolean validarAposta(){
 
         this.aposta = new Aposta();
         if(!this.textoApuesta.getText().toString().equals("")){
-            this.aposta.setNumero(Integer.parseInt(this.textoApuesta.getText().toString()));
-            if( this.aposta.getNumero() < 0 ||  this.aposta.getNumero() > 36  ){
-              Toast toast = Toast.makeText(this,"Escriu un numero dintre de la ruleta",Toast.LENGTH_LONG);
-              toast.show();
-              return false;
-            }
-            else {
+            this.seleccionarAposta();
+            if(this.aposta.getTipo().equals("Numero")){
+
+                if( this.aposta.getNumero() < 0 ||  this.aposta.getNumero() > 36  ){
+                    Toast toast = Toast.makeText(this,"Escriu un numero dintre de la ruleta",Toast.LENGTH_LONG);
+                    toast.show();
+                    return false;
+                }
+                else {
+                    if(!this.textPuntsAposta.getText().toString().equals("")){
+                        this.aposta.setQuantitat(Integer.parseInt(this.textPuntsAposta.getText().toString()));
+
+                        if( this.aposta.getQuantitat() > 0 &&  this.aposta.getQuantitat() <= this.jugador.getSaldo() ){
+                            return true;
+                        }else{
+                            this.textPuntsAposta.setError("No tens suficients punts");
+                            return false;
+                        }
+
+                    }else{
+                        this.textPuntsAposta.setError("Fes una aposta");
+                        return false;
+                    }
+
+
+                }
+
+
+            }else{
+
                 if(!this.textPuntsAposta.getText().toString().equals("")){
                     this.aposta.setQuantitat(Integer.parseInt(this.textPuntsAposta.getText().toString()));
 
@@ -100,7 +138,9 @@ public class Partida extends AppCompatActivity implements View.OnClickListener {
                     return false;
                 }
 
+
             }
+
         }else{
             Toast toast = Toast.makeText(this,"Fes una aposta",Toast.LENGTH_LONG);
             toast.show();
@@ -171,19 +211,37 @@ if(this.validarAposta())
 
     public void comprobarResultat(){
 
-        if(this.ruleta.getCasillaGanadora().getNumero() == this.aposta.getNumero()){
+        if(this.aposta.getColor().length() != 0){
 
-            this.jugador.setSaldo(this.aposta.getQuantitat()*35+this.jugador.getSaldo());
-            this.modificarPuntos();
-            Toast toast = Toast.makeText(this, "Guanyes", Toast.LENGTH_LONG);
-            toast.show();
+            if(this.ruleta.getCasillaGanadora().getColor().equals(this.aposta.getColor())){
+                this.jugador.setSaldo(this.aposta.getQuantitat()+this.jugador.getSaldo());
+                this.modificarPuntos();
+                Toast toast = Toast.makeText(this, "Guanyes", Toast.LENGTH_LONG);
+                toast.show();
+            }else{
+                this.jugador.setSaldo(this.jugador.getSaldo()-this.aposta.getQuantitat());
+                this.modificarPuntos();
+                Toast toast = Toast.makeText(this, "Perds", Toast.LENGTH_LONG);
+                toast.show();
+            }
+
         }else{
-            this.jugador.setSaldo(this.jugador.getSaldo()-this.aposta.getQuantitat());
-            this.modificarPuntos();
-            Toast toast = Toast.makeText(this, "Perds", Toast.LENGTH_LONG);
-            toast.show();
+            if(this.ruleta.getCasillaGanadora().getNumero() == this.aposta.getNumero()){
 
+                this.jugador.setSaldo(this.aposta.getQuantitat()*35+this.jugador.getSaldo());
+               this.modificarPuntos();
+                Toast toast = Toast.makeText(this, "Guanyes", Toast.LENGTH_LONG);
+                toast.show();
+            }else{
+                this.jugador.setSaldo(this.jugador.getSaldo()-this.aposta.getQuantitat());
+               this.modificarPuntos();
+                Toast toast = Toast.makeText(this, "Perds", Toast.LENGTH_LONG);
+                toast.show();
+
+            }
         }
+
+
 
     }
 
@@ -197,7 +255,7 @@ if(this.validarAposta())
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                    Partida.this.jugador = dataSnapshot.getValue(Jugador.class);
+                Partida.this.jugador = dataSnapshot.getValue(Jugador.class);
 
                 Partida.this.textoNombre.setText(Partida.this.jugador.getNom().toString());
                 Partida.this.textoPuntos.setText(""+Partida.this.jugador.getSaldo()+" puntos");
@@ -232,8 +290,47 @@ if(this.validarAposta())
         LinearLayout.LayoutParams rowParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         rowParams.setMargins(20,20,20,20);
 
+        LinearLayout rojoNegro = new LinearLayout(this);
+        rojoNegro.setOrientation(LinearLayout.HORIZONTAL);
+        rojoNegro.setLayoutParams(rowParams);
+
+        LinearLayout rojo = new LinearLayout(this);
+        rojo.setOrientation(LinearLayout.VERTICAL);
+        rojo.setLayoutParams(divParams);
+        rojo.setBackground(d);
+
+        TextView rojoText = new TextView(this);
+        rojoText.setPadding(10,10,10,10);
+        rojoText.setLayoutParams(casillaParams);
+        rojoText.setGravity(View.TEXT_ALIGNMENT_CENTER);
+        rojoText.setText("Rojo");
+
+        rojo.addView(rojoText);
+        rojo.setId(z+37);
+        rojo.setOnClickListener(this);
+
+        rojoNegro.addView(rojo);
 
 
+
+        LinearLayout negro = new LinearLayout(this);
+        negro.setOrientation(LinearLayout.VERTICAL);
+        negro.setLayoutParams(divParams);
+        negro.setBackground(d);
+
+        TextView negroText = new TextView(this);
+        negroText.setPadding(10,10,10,10);
+        negroText.setLayoutParams(casillaParams);
+        negroText.setGravity(View.TEXT_ALIGNMENT_CENTER);
+        negroText.setText("Negro");
+
+        negro.addView(negroText);
+        negro.setId(z+38);
+        negro.setOnClickListener(this);
+
+        rojoNegro.addView(negro);
+
+        this.tapete.addView(rojoNegro);
 
 
         LinearLayout num0 = new LinearLayout(this);
@@ -305,6 +402,10 @@ if(this.validarAposta())
 
         }
 
+        this.casillasTapete.add(new CasillaTapete(37));
+        this.casillasTapete.add(new CasillaTapete(38));
+
+
     }
 
     @Override
@@ -334,8 +435,18 @@ if(this.validarAposta())
 
         }else {
 
+            if (this.casillasTapete.get(v.getId()).getNumero() == 37){
+                this.textoApuesta.setTextColor(Color.parseColor("#ff0000"));
+                this.textoApuesta.setText("Rojo");
+            }else if(this.casillasTapete.get(v.getId()).getNumero() == 38){
+                this.textoApuesta.setTextColor(Color.parseColor("#000000"));
+                this.textoApuesta.setText("Negro");
+            }
+            else{
+                this.textoApuesta.setTextColor(Color.parseColor("#000000"));
+                this.textoApuesta.setText(this.casillasTapete.get(v.getId()).getNumero() + "");
+            }
 
-            this.textoApuesta.setText(this.casillasTapete.get(v.getId()).getNumero() + "");
 
             div.setBackground(seleccionada);
             this.casillasTapete.get(v.getId()).setEstado(!this.casillasTapete.get(v.getId()).isEstado());

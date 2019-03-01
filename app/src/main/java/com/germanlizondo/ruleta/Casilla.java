@@ -4,6 +4,7 @@ public class Casilla {
     private int numero;
     private String color;
 
+
     public Casilla(int numero, String color) {
         this.numero = numero;
         this.color = color;
@@ -33,4 +34,6 @@ public class Casilla {
     public void setColor(String color) {
         this.color = color;
     }
+
+
 }

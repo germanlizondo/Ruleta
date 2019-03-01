@@ -1,8 +1,12 @@
 package com.germanlizondo.ruleta;
 
+import android.graphics.ColorSpace;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
-public class Jugador implements Comparable<Jugador> {
+public class Jugador implements Comparable<Jugador>,Parcelable  {
+
 
 
     private String nom;
@@ -17,6 +21,37 @@ public class Jugador implements Comparable<Jugador> {
         this.aposta = new Aposta();
     }
 
+    private Jugador(Parcel source) {
+        this.nom = source.readString();
+        this.saldo = source.readInt();
+
+    }
+
+    public static final Parcelable.Creator<Jugador> CREATOR = new Parcelable.Creator<Jugador>() {
+
+        @Override
+        public Jugador createFromParcel(Parcel source) {
+            return null;
+        }
+
+        @Override
+        public Jugador[] newArray(int size) {
+            return new Jugador[size];
+        }
+
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.nom);
+        dest.writeInt(this.saldo);
+    }
+
     @Override
     public String toString() {
         return "Jugador{" +
@@ -25,6 +60,8 @@ public class Jugador implements Comparable<Jugador> {
                 ", aposta=" + aposta +
                 '}';
     }
+
+
 
 
 

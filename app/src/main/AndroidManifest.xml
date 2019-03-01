@@ -13,8 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service
+            android:name=".DatabaseService"
+            android:enabled="true"
+            android:exported="true"></service>
+        <service
             android:name=".CoinService"
-            android:exported="false"></service>
+            android:exported="false" />
 
         <activity android:name=".Login" />
         <activity android:name=".Partida" />

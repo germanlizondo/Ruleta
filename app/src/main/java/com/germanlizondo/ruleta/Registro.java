@@ -39,6 +39,7 @@ public class Registro extends AppCompatActivity {
             Jugador jugador = new Jugador(this.textonombre.getText().toString(),1000);
 
             Log.i(TAG, "registrarUsuario: "+jugador);
+
             this.db.agregarJugador(jugador);
 
             this.textonombre.setText("");

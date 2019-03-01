@@ -12,7 +12,7 @@
     android:paddingLeft="25dp"
     android:paddingBottom="25dp">
 
-    <TextView
+        <TextView
         android:id="@+id/tituloPuntuaciones"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,6 +21,12 @@
         android:fontFamily="@font/montserrat_bold"
         android:textSize="30dp"/>
 
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <ListView
             android:id="@+id/listaJugadors"
